@@ -1,0 +1,11 @@
+{
+  "name": "Migration_program",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "mysql": "^2.13.0",
+    "orientjs": "^2.2.5"
+  }
+}
