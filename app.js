@@ -24,6 +24,10 @@ const orientApi = require('./models/OrientAPI');
 global.mysqlInstance = new mySqlApi();
 global.orientInstance = new orientApi();
 
+let startTime = Date.now();
+
+console.log('Migration script starting...');
+
 orientInstance.prepareDatabase().then(() => {
 
   console.log(`OrientDB database named ${config.DATABASE} is ready!`);
@@ -50,6 +54,9 @@ orientInstance.prepareDatabase().then(() => {
 
             dataController.constructEdges(orientSchema).then(res => {
               console.log('Edges between data was constructed');
+
+              let endTime = (Date.now() - startTime) / 1000;
+              console.log(`Migration script made off the work for ${endTime} seconds!`);
 
             }, err => console.log(err));
           }, err => console.log(err));

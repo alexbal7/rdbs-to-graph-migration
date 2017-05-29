@@ -10,7 +10,7 @@ const CONFIG = {
     PORT: 2424,
     USERNAME: 'root',
     PASSWORD: 'root',
-    DATABASE: 'Migration'
+    DATABASE: 'MigrationTest'
   }
 };
 
