@@ -1,5 +1,7 @@
 'use strict';
 
+const StringUtils = require('../utils/StringUtils');
+
 class DataController {
 
   constructor() {
@@ -28,7 +30,7 @@ class DataController {
         let tableName = Object.keys(table)[0];
         let tableData = table[tableName];
         tableData.forEach(record => {
-          promiseArrData.push(orientInstance.createVertex(tableName, record));
+          promiseArrData.push(orientInstance.createVertex(StringUtils.firstUppercase(StringUtils.toCamelCase(tableName)), record));
         });
       });
 
@@ -54,7 +56,7 @@ class DataController {
 
   _processEdge(info) {
     return new Promise((resolve, reject) => {
-      let promiseArrEdges = [];
+      let promiseArrEdges = [Promise.resolve()];
 
       orientInstance.getRecords(info.sourceTable).then(res => {
         res.forEach(sourceRecord => {
@@ -63,7 +65,7 @@ class DataController {
               res.forEach(targetRecord => {
                 promiseArrEdges.push(orientInstance.createEdge(info.name, sourceRecord['@rid'], targetRecord['@rid']));
               });
-            });
+            }, err => console.log('ERROR', err));
           }
         });
       });

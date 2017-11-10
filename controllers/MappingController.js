@@ -1,5 +1,7 @@
 'use strict';
 
+const StringUtils = require('../utils/StringUtils');
+
 class MappingController {
 
   static convertSchema(schema) {
@@ -12,7 +14,7 @@ class MappingController {
   static _convertTablesToVertexes(schema) {
     return schema.map(table => {
       let vertex = {};
-      vertex.name = table.name;
+      vertex.name = StringUtils.firstUppercase(StringUtils.toCamelCase(table.name));
       if (table.hasOwnProperty('pk')) {
         vertex.pk = table.pk;
       }
@@ -27,11 +29,12 @@ class MappingController {
     tablesWithFks.forEach(table => {
       table.fks.forEach(fk => {
         let edge = {};
-        edge.name = `${table.name}Has${fk.refTable}`;
+        edge.name =
+          `${StringUtils.firstUppercase(StringUtils.toCamelCase(table.name))}Has${StringUtils.firstUppercase(StringUtils.toCamelCase(fk.refTable))}`;
         edge.source = fk.source;
         edge.target = fk.target;
-        edge.sourceTable = table.name;
-        edge.targetTable = fk.refTable;
+        edge.sourceTable = StringUtils.firstUppercase(StringUtils.toCamelCase(table.name));
+        edge.targetTable = StringUtils.firstUppercase(StringUtils.toCamelCase(fk.refTable));
         edges.push(edge);
       });
     });

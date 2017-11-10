@@ -61,7 +61,6 @@ orientInstance.prepareDatabase().then(() => {
             }, err => console.log(err));
           }, err => console.log(err));
         }, err => console.log(err));
-
       }, err => console.log(err));
     }, err => console.log(err));
 }, err => console.log(err));
